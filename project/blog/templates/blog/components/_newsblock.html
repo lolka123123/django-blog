@@ -1,0 +1,54 @@
+{% load static %}
+<div class="section-main-newsblock">
+
+
+    <div class="posts">
+        {% if not articles_lst %}
+        Тут пусто
+        {% endif %}
+
+        {% for article in articles_lst %}
+        <div class="post">
+            <div class="section1">
+                <a href="{% url 'article' article.article.pk %}"><img src="{{ article.article.image.url }}" alt=""></a>
+
+                <div class="categories">
+                    {% for category in article.categories %}
+                    <a href="{% url 'category' category.pk %}">{{ category }}</a>
+                    {% endfor %}
+
+
+                </div>
+                <a href="{% url 'article' article.article.pk %}" class="text">
+                    <h2 class="title">{{ article.article.title }}</h2>
+                    <p class="description">{{ article.article.description|truncatewords:20 }}</p>
+                </a>
+            </div>
+
+
+            <div class="section2">
+                <a href="{% url 'profile' article.profile.user.pk %}" class="user">
+
+                    <img src="{{ article.profile.image.url }}" alt="">
+
+
+                    <p>{{ article.profile.user }}</p>
+                </a>
+                <div class="info">
+                    <p>{{ article.article.created_at|date:"d.m.Y" }}</p>
+
+                    <p>💬 {{ article.comments_count }}</p>
+                </div>
+            </div>
+
+
+        </div>
+        {% endfor %}
+
+
+    </div>
+
+    {% include 'blog/components/_newsblock_aside.html' %}
+
+
+</div>

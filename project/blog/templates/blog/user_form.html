@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block main %}
+{% if 'register' in request.path %}
+<form class="section-main_form" action="#" method="post">
+    {% csrf_token %}
+
+    <h2>Логин:</h2>
+
+    {{ form.username }}
+
+    <h2>Электроннная почта:</h2>
+
+    {{ form.email }}
+
+    <h2>Пароль:</h2>
+
+    {{ form.password1 }}
+
+    <h2>Подтвердить пароль:</h2>
+
+    {{ form.password2 }}
+
+    <button>Зарегестрироваться</button>
+
+</form>
+{% else %}
+<form class="section-main_form" action="#" method="post">
+    {% csrf_token %}
+
+    <h2>Логин:</h2>
+
+    {{ form.username }}
+
+    <h2>Пароль:</h2>
+
+    {{ form.password }}
+
+    <button>Войти в аккаунт</button>
+
+</form>
+{% endif %}
+
+{% endblock main %}
+

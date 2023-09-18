@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block main %}
+<form class="section-main_add-post" action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% if 'update' in request.path %}
+    <h1>Изменить пост</h1>
+    {% else %}
+    <h1>Добавить пост</h1>
+    {% endif %}
+
+    <h2>Название поста:</h2>
+
+    {{ form.title }}
+
+    <h2>Описание поста:</h2>
+
+    {{ form.description }}
+
+    {{ form.image }}
+
+    {{ form.categories }}
+
+
+
+    <button>Опубликовать</button>
+
+</form>
+{% endblock main %}

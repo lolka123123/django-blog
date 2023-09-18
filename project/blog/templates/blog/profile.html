@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block main %}
+
+<div class="section-main_profile">
+
+    <div class="user">
+
+        <img src="{{ profile.image.url }}" alt="">
+
+
+        <h2>{{ user.username }}</h2>
+
+        {% if request.user.pk == user.pk %}
+        <p>Почта: <span>{{ user.email }}</span></p>
+
+        {% endif %}
+        {% if profile.description != None and profile.description != '' and profile.description != ' ' %}
+        <p>Описание: {{ profile.description }}</p>
+        {% endif %}
+
+    </div>
+
+
+    <div class="buttons">
+        {% if request.user.pk == user.pk %}
+        <a class="button" href="{% url 'profile_edit' request.user.pk %}">Настройки</a>
+        <a class="button_logout" href="{% url 'logout' %}">Выйти</a>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock main %}

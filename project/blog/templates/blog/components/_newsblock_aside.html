@@ -1,0 +1,11 @@
+<div class="aside">
+        {% if not 'my_posts' in request.path %}
+        <div class="aside-categories">
+            {% for category in categories %}
+            <a href="{% url 'category' category.pk %}">{{ category.title }}</a>
+            {% endfor %}
+
+        </div>
+        {% endif %}
+
+    </div>

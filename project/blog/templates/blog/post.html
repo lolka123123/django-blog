@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% load static %}
+
+{% block main %}
+<div class="section-main-post">
+    {% if request.user.pk == article.creator.user.pk %}
+    <div class="delete-success">
+            <div class="window">
+                <div class="cancel delete_cancel">
+                    <div class="mark">
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                </div>
+                <h3>Удалить пост <span>{{ article.title }}</span>?</h3>
+                <div class="options">
+                    <a class="button" href="{% url 'article_delete' article.pk %}">Удалить</a>
+                    <p class="button delete_cancel">Назад</p>
+                </div>
+            </div>
+
+        </div>
+    {% endif %}
+
+    <img src="{{ article.image.url }}" alt="">
+
+
+    <div class="categories">
+        {% for category in article.categories.all %}
+        <a href="{% url 'category' category.pk %}">{{ category }}</a>
+        {% endfor %}
+
+    </div>
+
+
+    <div class="creator">
+        <a href="{% url 'profile' article.creator.pk %}" class="user">
+            <img src="{{ profile.image.url }}" alt="">
+            <p>{{ article.creator }}</p>
+        </a>
+        <div class="info">
+            <p>{{ article.created_at }}</p>
+            <p>💬 {{ comments_count }}</p>
+        </div>
+    </div>
+
+    {% if request.user.pk == article.creator.user.pk %}
+    <div class="change_buttons">
+        <a class="button" href="{% url 'article_update' article.pk %}">Изменить</a>
+        <p class="button article-delete">Удалить</p>
+    </div>
+    {% endif %}
+
+
+    <h1>{{ article.title }}</h1>
+
+
+    <div class="description">{{ article.description|linebreaks }}</div>
+
+
+    {% if request.user.is_authenticated %}
+    <h2>Добавить Комментарий: </h2>
+
+    <form class="add_comment" action="" method="post">
+        {% csrf_token %}
+
+        {{ form.text }}
+
+        <button>Добавить комментарий</button>
+
+    </form>
+    {% endif %}
+
+
+    {% if comments %}
+    <h2>Комментарии: </h2>
+    {% endif %}
+    <div class="comments">
+        {% for comment in comments %}
+        <div class="comment">
+            {% if request.user.pk == comment.user.user.pk %}
+            <div class="delete-comment_success">
+                    <div class="window">
+                        <div class="cancel delete-comment_cancel">
+                            <div class="mark">
+                                <span></span>
+                                <span></span>
+                            </div>
+
+                        </div>
+                        <h3>Удалить комментарий?</h3>
+                        <div class="options">
+                            <a class="button" href="{% url 'comment_delete' comment.pk %}">Удалить</a>
+                            <p class="button delete-comment_cancel">Назад</p>
+                        </div>
+                    </div>
+
+                </div>
+            {% endif %}
+
+
+
+            <div class="user">
+                {% for i in profiles %}
+                {% if i.user.pk == comment.user.user.pk %}
+                <a href="{% url 'profile' comment.user.user.pk %}" class="link">
+
+                    <img src="{{ i.image.url }}" alt="">
+
+
+                    <div class="info">
+
+                        <p class="user-name">{{ comment.user }}</p>
+
+                        <p class="date">{{ comment.created_at }}</p>
+
+                    </div>
+                </a>
+                {% endif %}
+                {% endfor %}
+
+                {% if request.user.pk == comment.user.user.pk %}
+                <p class="delete-comment">Удалить</p>
+                {% endif %}
+            </div>
+
+
+            <p>{{ comment.text }}</p>
+
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock main %}

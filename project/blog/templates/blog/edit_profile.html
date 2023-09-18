@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block main %}
+<form class="section-main_edit-profile" action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+                        <h1>Редактировать профиль</h1>
+
+<!--                        <img src="" alt="">-->
+
+                        <h2>Фото:</h2>
+
+                        {{ form.image }}
+
+                        <h2>Описание:</h2>
+
+                        {{ form.description }}
+
+                        <div class="buttons">
+
+                            <button class="button">Сохронить</button>
+
+                            <a class="button" href="{% url 'profile' request.user.pk %}">Назад</a>
+
+                        </div>
+
+                    </form>
+{% endblock main %}
